@@ -42,7 +42,7 @@ Simulated annealing algorithms takes in four parameters and the effectiveness of
 
 1. <img src="https://latex.codecogs.com/gif.latex?\beta" title="\beta" /> - normalizing constant
 
-> Choice of <img src="https://latex.codecogs.com/gif.latex?\beta" title="\beta" /> depends on the expected variation in the performance measure over the search space. This can be chosen by playing around with this Excel workbook. If the chosen value of beta is too high, i.e., probability of rejecting a set of parameters is too low in later iterations, you may end up in an infinite loop.
+> Choice of <img src="https://latex.codecogs.com/gif.latex?\beta" title="\beta" /> depends on the expected variation in the performance measure over the search space. This can be chosen by playing around with [this](https://github.com/santhoshhari/simulated_annealing/blob/master/simulated_annealing_parameters.xlsx) Excel workbook. If the chosen value of beta is too high, i.e., probability of rejecting a set of parameters is too low in later iterations, you may end up in an infinite loop.
 
 2. <img src="https://latex.codecogs.com/gif.latex?T_0" title="T_0" /> - initial temperature
 
