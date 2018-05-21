@@ -48,13 +48,13 @@ Simulated annealing algorithms takes in four parameters and the effectiveness of
 
 > A good rule of thumb is that your initial temperature <img src="https://latex.codecogs.com/gif.latex?T_0" title="T_0" /> should be set to accept roughly 98% of the moves and that the final temperature should be low enough that the solution does not improve much, if at all
 
-3. <img src="https://latex.codecogs.com/gif.latex?\alpha" title="\alpha" /> - Factor at which temperature is altered.
+3. <img src="https://latex.codecogs.com/gif.latex?\alpha" title="\alpha" /> - Factor by which temperature is scaled after n iterations.
 
-> Lower values of <img src="https://latex.codecogs.com/gif.latex?\alpha" title="\alpha" /> restrict the search space faster than higher values.  0.85 can be chosen by default.
+> Lower values of <img src="https://latex.codecogs.com/gif.latex?\alpha" title="\alpha" /> restrict the search space at a faster rate than higher values.  0.85 can be chosen by default.
 
 4. n - number of iterations after which temperature is altered (after every n steps T is updated as T * <img src="https://latex.codecogs.com/gif.latex?\alpha" title="\alpha" />
 
-> The number of iterations after which tempurature is updated doesn't affect the results and can be chosen between 5 - 10.
+> The value of n doesn't affect the results and can be chosen between 5 - 10.
 
 ## Usage
 
