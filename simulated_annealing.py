@@ -8,7 +8,7 @@ from random import random
 ###############################
 
 # def train_model(curr_params, param, Xtrain, Xvalid, Ytrain,
-#                 Yvalid, metric=f1_score):
+#                 Yvalid):
 #     """
 #     Train the model with given set of hyperparameters
 #     curr_params - Dict of hyperparameters and chosen values
@@ -17,30 +17,29 @@ from random import random
 #     Xvalid - Validation Data
 #     Ytrain - Train labels
 #     Yvalid - Validaion labels
-#     metric - Metric to compute model performance on
 #     """
 #     params_copy = param.copy()
 #     params_copy.update(curr_params)
 #     model = XGBClassifier(**params_copy)
 #     model.fit(Xtrain, Ytrain)
 #     preds = model.predict(Xvalid)
-#     metric_val = metric(Yvalid, preds)
+#     metric_val = f1_score(Yvalid, preds) # Any metric can be used
 #     return model, metric_val
 
 
-def choose_params(tune_dic, curr_params=None):
+def choose_params(param_dict, curr_params=None):
     """
     Function to choose parameters for next iteration
     Inputs:
-    tune_dic - Dict of Hyperparameter search space
+    param_dict - Ordered dictionary of hyperparameter search space
     curr_params - Dict of current hyperparameters
     Output:
     Dictionary of parameters
     """
     if curr_params:
         next_params = curr_params.copy()
-        param_to_update = np.random.choice(list(tune_dic.keys()))
-        param_vals = tune_dic[param_to_update]
+        param_to_update = np.random.choice(list(param_dict.keys()))
+        param_vals = param_dict[param_to_update]
         curr_index = param_vals.index(curr_params[param_to_update])
         if curr_index == 0:
             next_params[param_to_update] = param_vals[1]
@@ -51,13 +50,13 @@ def choose_params(tune_dic, curr_params=None):
                 param_vals[curr_index + np.random.choice([-1, 1])]
     else:
         next_params = dict()
-        for k, v in tune_dic.items():
+        for k, v in param_dict.items():
             next_params[k] = np.random.choice(v)
 
     return next_params
 
 
-def simulate_annealing(tune_dic,
+def simulate_annealing(param_dict,
                        const_param,
                        X_train,
                        X_valid,
@@ -67,12 +66,12 @@ def simulate_annealing(tune_dic,
                        maxiters=100,
                        alpha=0.85,
                        beta=1.3,
-                       T=0.40,
+                       T_0=0.40,
                        update_iters=5):
     """
     Function to perform hyperparameter search using simulated annealing
     Inputs:
-    tune_dic - Dictionary of Hyperparameter search space
+    param_dict - Ordered dictionary of Hyperparameter search space
     const_param - Static parameters of the model
     Xtrain - Train Data
     Xvalid - Validation Data
@@ -83,25 +82,26 @@ def simulate_annealing(tune_dic,
     maxiters - Number of iterations to perform the parameter search
     alpha - factor to reduce temperature
     beta - constant in probability estimate
-    T - Initial temperature
+    T_0 - Initial temperature
     update_iters - # of iterations required to update temperature
     Output:
     Dataframe of the parameters explored and corresponding model performance
     """
-    columns = [*tune_dic.keys()] + ['Metric', 'Best Metric']
+    columns = [*param_dict.keys()] + ['Metric', 'Best Metric']
     results = pd.DataFrame(index=range(maxiters), columns=columns)
     best_metric = -1.
     prev_metric = -1.
     prev_params = None
     best_params = dict()
-    weights = list(map(lambda x: 10**x, list(range(len(tune_dic)))))
+    weights = list(map(lambda x: 10**x, list(range(len(param_dict)))))
     hash_values = set()
+    T = T_0
 
     for i in range(maxiters):
         print('Starting Iteration {}'.format(i))
         while True:
-            curr_params = choose_params(tune_dic, prev_params)
-            indices = [tune_dic[k].index(v) for k, v in curr_params.items()]
+            curr_params = choose_params(param_dict, prev_params)
+            indices = [param_dict[k].index(v) for k, v in curr_params.items()]
             hash_val = sum([i * j for (i, j) in zip(weights, indices)])
             if hash_val in hash_values:
                 print('Combination revisited')

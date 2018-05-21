@@ -40,22 +40,25 @@ Simulated Annealing applied to hyper parameter tuning consists of following step
 
 Simulated annealing algorithms takes in four parameters and the effectiveness of the algorithm depends on the choice of thse parameters.
 
-1. <img src="https://latex.codecogs.com/gif.latex?\beta" title="\beta" />
+1. <img src="https://latex.codecogs.com/gif.latex?\beta" title="\beta" /> - normalizing constant
 
-> Choice of <img src="https://latex.codecogs.com/gif.latex?\beta" title="\beta" /> depends on the expected variantion in the performance measure over the search space. This can be chosen by playing around with this Excel workbook. If the chosen value of beta is too high, i.e., probability of rejecting a set of parameters is too low in later iterations, you may end up in an infinite loop.
+> Choice of <img src="https://latex.codecogs.com/gif.latex?\beta" title="\beta" /> depends on the expected variation in the performance measure over the search space. This can be chosen by playing around with this Excel workbook. If the chosen value of beta is too high, i.e., probability of rejecting a set of parameters is too low in later iterations, you may end up in an infinite loop.
 
 2. <img src="https://latex.codecogs.com/gif.latex?T_0" title="T_0" /> - initial temperature
 
-> A good rule of thumb is that your initial temperature <img src="https://latex.codecogs.com/gif.latex?T_0" title="T_0" /> should be set to accept roughly 98% of the moves and that the final temperature Tmin should be low enough that the solution does not improve much, if at all
+> A good rule of thumb is that your initial temperature <img src="https://latex.codecogs.com/gif.latex?T_0" title="T_0" /> should be set to accept roughly 98% of the moves and that the final temperature should be low enough that the solution does not improve much, if at all
 
 3. <img src="https://latex.codecogs.com/gif.latex?\alpha" title="\alpha" /> - Factor at which temperature is altered.
 
 > Lower values of <img src="https://latex.codecogs.com/gif.latex?\alpha" title="\alpha" /> restrict the search space faster than higher values.  0.85 can be chosen by default.
 
-4. n - number of iterations after which temperature is altered
+4. n - number of iterations after which temperature is altered (after every n steps T is updated as T * <img src="https://latex.codecogs.com/gif.latex?\alpha" title="\alpha" />
 
 > The number of iterations after which tempurature is updated doesn't affect the results and can be chosen between 5 - 10.
 
 ## Usage
 
-A version of simulated annealing has been implemented and available in the `simmulated_annealing.py`. It can be downloaded and imported 
+A version of simulated annealing has been implemented and available in the `simmulated_annealing.py`. It can be downloaded and imported using the following command
+`from simulated_annealing import *`
+
+annealing_example notebook shows how to use the current implementation. You have to define train_model and parameter dictionaries before calling the simulate_annealing function.
