@@ -4,7 +4,7 @@ Machine learning models with high number of hyperparameters usually perform bett
 
 Approaches often employed to tune the hyperparameters are:
 1. **Grid Search**: This method does an exhaustive search in the hyperparmeter space. This exhaustive search results in high run time, owning to the total number of combinations that emerge in cases with many hyperparameters and possible values they can take.
-2. **Random Search**: This method draws random samples from the hyper parameter domain (continuous or discrete). It solves the problem of run time by exploring fewer combinations by but may not always yeild a result as good as grid search. 
+2. **Random Search**: This method draws random samples from the hyper parameter domain (continuous or discrete). It solves the problem of run time by exploring fewer combinations by but may not always yield a result as good as grid search. 
 3. **Sequential Grid Search**: This method is a sequential application of Grid Search where the hyper parameters (one or a subset) are tuned sequentially. This avoids high number of combinations but fails to capture  the interactions between hyperparameters.
 
 To overcome the discussed drawbacks, one can use *Simulated Annealing* to find the optimal hyper parameter values.
@@ -23,22 +23,22 @@ The name of this approach is inspired from metallurgy technique of heating and c
 Simulated Annealing applied to hyper parameter tuning consists of following steps:
 
 1. Randomly choose a value for all hyperparameters and treat it as current state and evaluate model performance
-2. Alter the current state by randomly updating value of one hyperparameter by selecting a value in the immediate neighborhood (randomly) to get neighbouring state
+2. Alter the current state by randomly updating value of one hyperparameter by selecting a value in the immediate neighborhood (randomly) to get neighboring state
 3. If the combination is already visited, repeat step 2 until a new combination is generated
-4. Evaluate model performance on the neighbouring state
-5. Compare the model performance of neighbouting state to the current state and decide whether to accept the neighbouring state as current state or reject it based on some criteria (explained below). 
+4. Evaluate model performance on the neighboring state
+5. Compare the model performance of neighboring state to the current state and decide whether to accept the neighboring state as current state or reject it based on some criteria (explained below). 
 6. Based on the result of step 5, repeat steps 2 though 5
 
 **Acceptance Criteria:**
-- If the performance of neighbouring state is better than current state - Accept
-- If the performance of neighbouring state is worse than current state - Accept with probability <img src="https://latex.codecogs.com/gif.latex?e^{-\beta&space;\Delta&space;f/T}" title="e^{-\beta \Delta f/T}" /> where,
+- If the performance of neighboring state is better than current state - Accept
+- If the performance of neighboring state is worse than current state - Accept with probability <img src="https://latex.codecogs.com/gif.latex?e^{-\beta&space;\Delta&space;f/T}" title="e^{-\beta \Delta f/T}" /> where,
     - <img src="https://latex.codecogs.com/gif.latex?\beta" title="\beta" /> is a constant
     - T is current temperature
-    - <img src="https://latex.codecogs.com/gif.latex?\Delta&space;f" title="\Delta f" /> is the performance difference between the current state and the neighbouring state
+    - <img src="https://latex.codecogs.com/gif.latex?\Delta&space;f" title="\Delta f" /> is the performance difference between the current state and the neighboring state
     
 **Annealing Parameters:**
 
-Simulated annealing algorithms takes in four parameters and the effectiveness of the algorithm depends on the choice of thse parameters.
+Simulated annealing algorithms takes in four parameters and the effectiveness of the algorithm depends on the choice of these parameters.
 
 1. <img src="https://latex.codecogs.com/gif.latex?\beta" title="\beta" /> - normalizing constant
 
@@ -61,4 +61,4 @@ Simulated annealing algorithms takes in four parameters and the effectiveness of
 A version of simulated annealing has been implemented and available in the `simmulated_annealing.py`. It can be downloaded and imported using the following command
 `from simulated_annealing import *`
 
-annealing_example notebook shows how to use the current implementation. You have to define train_model and parameter dictionaries before calling the simulate_annealing function.
+annealing_example notebook shows how to use the current implementation. You have to define train_model and parameter dictionaries before calling the simulate_annealing function. **Note that the current implementation assumes higher value of metric is better (ex - AUC, Accuracy, F1, R2). For metrics like RMSE, MAE where lower values are considered better, the inequalities in the simulated annealing function should be reversed.**
