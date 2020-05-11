@@ -62,3 +62,6 @@ A version of simulated annealing has been implemented and available in the `simm
 `from simulated_annealing import *`
 
 annealing_example notebook shows how to use the current implementation. You have to define train_model and parameter dictionaries before calling the simulate_annealing function. **Note that the current implementation assumes higher value of metric is better (ex - AUC, Accuracy, F1, R2). For metrics like RMSE, MAE where lower values are considered better, the inequalities in the simulated annealing function should be reversed.**
+
+## Reference
+- https://arxiv.org/pdf/1906.01504.pdf
